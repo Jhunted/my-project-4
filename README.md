@@ -15,10 +15,10 @@ Intro:
 Pending
 
 <h1>Technologies used:</h1>
-MongoDb
+<p>MongoDb
 Express
 React
-NodeJs
+NodeJs</p>
 
 Getting Started
 
