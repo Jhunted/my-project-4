@@ -1,0 +1,17 @@
+.AnimePage-link-margin {
+    margin-bottom: 10px;
+  }
+  
+  .AnimePage {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .AnimePage-controls {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    margin-left: 20px;
+  }
+  
+  
