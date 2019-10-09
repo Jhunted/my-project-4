@@ -8,6 +8,11 @@ const PostSchema = mongoose.Schema({
     },
     //mal_id
     //image_url
+    name: {
+        type: String,
+        required: true
+    },
+
     title: {
         type: String,
         required: true
@@ -16,8 +21,7 @@ const PostSchema = mongoose.Schema({
     synopsis: {
         type: String,
         required: true
-    }
-    
+    } 
 });
 
 module.exports = mongoose.model('post', PostSchema);
