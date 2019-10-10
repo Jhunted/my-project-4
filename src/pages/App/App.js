@@ -7,6 +7,8 @@ import userService from '../../utils/userService';
 import tokenService from '../../utils/tokenService';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import SearchResults from '../../components/SearchResults/SearchResults';
+import Collection from '../../components/Collection/Collection';
+import animeService from '../../utils/animeService';
 import { getAnimes } from '../../services/a-api.js';
 
 import "bootstrap/dist/css/bootstrap.min.css";

@@ -1,6 +1,5 @@
-
 import React from 'react';
-import './SearchResults.css';
+// import './SearchResults.css';
 
 const SearchResults = (props) => {
 let results = '';

@@ -1,6 +1,5 @@
 import tokenService from "./tokenService";
 
-
 const BASE_URL = '/api/collections';
 
 export default {

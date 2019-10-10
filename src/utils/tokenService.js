@@ -1,31 +1,35 @@
-  
-const express = require('express');
-const path = require('path');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
+function setToken(token) {
+    if(token) {
+        localStorage.setItem('token', token);
+    } else {
+        localStorage.removeItem('token');
+    }
+}
 
-const app = express();
+function getToken() {
+    let token = localStorage.getItem('token');
+    if (token) {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        if (payload.exp < Date.now() / 1000) {
+            localStorage.removeItem('token');
+            token = null;
+        }
+    }
+    return token;
+}
 
-require('dotenv').config();
-require('./config/database');
+function getUserFromToken() {
+    const token = getToken();
+    return token ? JSON.parse(atob(token.split('.')[1])).user : null;
+}
 
+function removeToken() {
+    localStorage.removeItem('token');
+}
 
-app.use(logger('dev'));
-app.use(express.json());
-
-app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
-app.use(express.static(path.join(__dirname, 'build')));
-
-// Put your API routes here, before the "catch all"
-app.use('/api/users', require('./routes/api/users'));
-
-
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
-
-  const port = process.env.PORT || 3001;
-
-  app.listen(port, function() {
-      console.log(`App running on port ${port}`);
-  });
+export default {
+    setToken,
+    getToken,
+    getUserFromToken,
+    removeToken
+};

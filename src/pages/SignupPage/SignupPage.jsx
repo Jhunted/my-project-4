@@ -13,6 +13,7 @@ class SignupPage extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div className='SignupPage'>
         <SignupForm {...this.props} updateMessage={this.updateMessage} />
