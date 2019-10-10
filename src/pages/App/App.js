@@ -119,7 +119,7 @@ class App extends Component {
           </div>
 
         <header className="App-header">
-          <h1>Snikety Snikt's Comic Collector</h1>
+          <h1>Anime Collector</h1>
           <p>
             { 
               this.state.user 
