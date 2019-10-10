@@ -22,6 +22,7 @@ const PostSchema = mongoose.Schema({
         type: String,
         required: true
     } 
+    //rating
 });
 
 module.exports = mongoose.model('post', PostSchema);

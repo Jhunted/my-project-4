@@ -7,10 +7,13 @@ import NavBar from '../../components/NavBar/NavBar';
 const AnimePage = (props) => {
     return (
       <div className="AnimePage">
-        <NavBar
+          <h1>Anime Page</h1>
+        {/* <NavBar
           user={props.user}
           handleLogout={props.handleLogout}
-        />
+        /> */}
       </div>
         );
     };
+
+    export default AnimePage;
