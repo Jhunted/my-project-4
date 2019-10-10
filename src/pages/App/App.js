@@ -41,14 +41,8 @@ class App extends Component {
     super();
     this.state = {
       collection: [],
-      newComic: null,
+      newAnime: null,
       query: '',
-      // title: '',
-      // issueNumber: '',
-      // pageCount: 0,
-      // description: '',
-      // thumbnail: '',
-      // price: 0,
       user: userService.getUser()
 
     };
@@ -80,10 +74,10 @@ class App extends Component {
   handleAddAnime = (e, result) => {
     e.preventDefault();
 
-    comicService.addAnime(result);
+    animeService.addAnime(result);
   }
 
-  handleDelComic = (e, collection) => {
+  handleDelAnime = (e, collection) => {
     e.preventDefault();
 
 
