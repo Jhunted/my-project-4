@@ -1,118 +1,166 @@
 import React, { Component } from 'react';
+import { Route, Switch, Link, Redirect } from 'react-router-dom';
 import './App.css';
-import { Route, Switch, Redirect } from 'react-router-dom';
 import SignupPage from '../SignupPage/SignupPage';
 import LoginPage from '../LoginPage/LoginPage';
 import userService from '../../utils/userService';
-import NavBar from '../../components/NavBar/NavBar';
-import AnimePage from '../../pages/AnimePage/AnimePage';
-import postAPI from '../../services/posts-api';
+import tokenService from '../../utils/tokenService';
+import SearchBar from '../../components/SearchBar/SearchBar';
+import SearchResults from '../../components/SearchResults/SearchResults';
+import { getAnimes } from '../../services/a-api.js';
+
+import "bootstrap/dist/css/bootstrap.min.css";
+
+class SearchPage extends Component {
+  state = {
+    results: []
+  }
+
+  handleSearch = async (query) => {
+    console.log(query);
+    this.setState({ results: [] });
+
+    const results = await getAnimes(query);
+    this.setState({ results: results.data });
+      console.log(results.data);
+      return { results: results.data };
+    }
+
+  render() {
+    return (
+      <div>
+        <SearchBar onSubmit={this.handleSearch} />
+        <SearchResults handleAddAnime={this.props.handleAddAnime} result={this.state.results} />
+      </div>
+    );
+  }
+}
 
 class App extends Component {
   constructor() {
     super();
-    this.state = { 
-      user: userService.getUser(),
-      posts: []
-     }
-  }
-  
-  handleLogout = () => {
-    userService.logout();
-    this.setState({ user: null });
-  };
+    this.state = {
+      collection: [],
+      newComic: null,
+      query: '',
+      // title: '',
+      // issueNumber: '',
+      // pageCount: 0,
+      // description: '',
+      // thumbnail: '',
+      // price: 0,
+      user: userService.getUser()
 
-  handleSignupOrLogin = () => {
-    this.setState({user: userService.getUser()});
-  };
-
-
-  handleAddPost = async newPostData => {
-    const newPost = await postAPI.create(newPostData);
-    this.setState(state => ({
-      posts: [...state.posts, newPost]
-    }), () => this.props.history.push('/'));
-  }
-
-  handleUpdatePost = async updatedPostData => {
-    const updatedPost = await postAPI.update(updatedPostData);
-    const newPostsArray = this.state.posts.map(p =>
-      p._id === updatedPost._id ? updatedPost : p
-    );
-    this.setState(
-      {posts: newPostsArray},
-      () => this.props.history.push('/')
-    );
-  }
-
-  handleDeletePost = async id => {
-    await postAPI.deleteOne(id);
-    this.setState(state => ({
-      posts: state.posts.filter(p => p._id !== id)
-    }), () => this.props.history.push('/'));
+    };
   }
 
   async componentDidMount() {
-    const posts = await postAPI.getAll();
-    this.setState({posts});
+    if (this.state.user) {
+      let collection = await fetch('/api/collections', {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer ' + tokenService.getToken()
+        }
+      }).then(res => res.json())
+      
+      this.setState({ collection });
+    }
+  }
+
+  handleLogout = () => {
+    userService.logout();
+    this.setState({ user: null });
+  }
+  
+  handleSignUpOrLogin = () => {
+    this.setState({ user: userService.getUser() });
+  }
+
+  handleAddAnime = (e, result) => {
+    e.preventDefault();
+
+    comicService.addAnime(result);
+  }
+
+  handleDelComic = (e, collection) => {
+    e.preventDefault();
+
+
   }
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <strong>Post Page</strong>
-        </header>
-        <Switch>
-          <Route
-            exact
-            path='/'
-            render={() => (
-          <NavBar 
-            className="NavBar"
-            user={this.state.user}
-            handleLogout={this.handleLogout}
-            />
-            )}
-          />
-          <Route
-            exact
-            path='/signup'
-            render={({ history }) => (
-              <SignupPage
-                history={history}
-                handleSignupOrLogin={this.handleSignupOrLogin}
-            />
-            )}
-            />
-            <Route
-            exact
-            path='/login'
-            render={({ history }) => (
-              <LoginPage
-                history={history}
-                handleSignupOrLogin={this.handleSignupOrLogin}
-              />
-            )}
-          />
-          :
-          <Redirect to='/login' />
-          }/>
-        </Switch>
-        <div className="Body">
-          <AnimePage 
-            className="AnimePage" 
-            user={this.state.user}
-            handleDeletePost={this.handleDeletePost}
-            handleAddPost={this.handleAddPost}
-            handleUpdatePost={this.handleUpdatePost}
-            handleSignupOrLogin={this.handleSignupOrLogin}
-            />
-        </div>
-        <footer className="App-footer">(C) 2019 Joseph Hunt </footer>
-      </div>
-    )
-  };
-};
+        <div className="container">
+          <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <div className="flex-1">
+              <ul className="navbar-nav">
+                <li className="nav-item">
+                  <Link to="/search" className="nav-link">Search for Anime by Title</Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/collection" className="nav-link">My Collection</Link>
+                </li>
+              </ul>
+            </div>
+            <div className="flex-1 text-right">
+                { this.state.user
+                ? <ul class="list-unstyled mb-0">
+                    <li className="nav-item"><Link to="" onClick={this.handleLogout}>Logout</Link></li>
+                  </ul>
+                : <ul class="list-unstyled mb-0">
+                    <li className="nav-item"><Link to="/signup">Sign up</Link></li>
+                    <li className="nav-item"><Link to="/login">Login</Link></li>
+                  </ul>
+              }
+            </div>
+            </nav>
+          </div>
 
-export default App;
+        <header className="App-header">
+          <h1>Snikety Snikt's Comic Collector</h1>
+          <p>
+            { 
+              this.state.user 
+              ? `Welcome, ${this.state.user.name}`
+              : 'Please Sign Up' 
+            }
+          </p>       
+        </header>
+  
+        <Switch>
+          <Route exact path="/signup" render={({ history }) => 
+            <SignupPage 
+              history={history}
+              handleSignUpOrLogin={this.handleSignUpOrLogin}
+            />
+          } />
+          <Route exact path="/login" render={({ history }) => 
+            <LoginPage 
+              history={history}
+              handleSignUpOrLogin={this.handleSignUpOrLogin} 
+            />
+          } />
+          <Route path="/search" render={(props) => (
+            userService.getUser() ?
+            <SearchPage {...props} handleAddAnime={this.handleAddAnime} />
+            :
+            <Redirect to='/login' />
+            )} />
+          <Route path="/collection" render={(props) =>
+            userService.getUser() ?
+            <Collection 
+              {...props} collection={this.state.collection}
+                showTypes={this.state.showTypes}
+              />
+            :
+              <Redirect to='/login'/>
+            } />
+          </Switch>
+        </div>
+      );
+    }
+  }
+  
+  export default App;
