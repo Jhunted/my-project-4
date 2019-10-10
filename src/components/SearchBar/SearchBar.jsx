@@ -1,43 +1,36 @@
-import React, { Component } from 'react';
+import React from 'react';
+import './SearchBar.css';
 
-class Searchbar extends Component {
+const SearchBar = (props) => {
+    const [query, setQuery] = React.useState('')
 
-  constructor() {
-    super()
-    state = {
-      query: '',
-      results: null,
-    };
-  }
- 
-  /*
-    `https://api.jikan.moe/v3/search/type/?q=${query}&page=1`
-  */
+return (
+    <div className='SearchBar'>
+        <h3>Search Bar</h3>
+        <form onSubmit={(event) => 
+            {event.preventDefault();
+            props.onSubmit(query)}}>
+            
+            <label>
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search Anime by Title"
+                    value={query}
+                    onChange={(event) => {
+                        setQuery(event.target.value) 
+                    }}
+                    required
+                    pattern=".{2,}"
+                />
+            </label>
+            <button type='submit'>
+            SUBMIT
+            </button>
+        </form>
 
-  handleChange () {
-    // track the changes in the search bar
-  }
+    </div>
 
-  /**
-   * THIS SHOULD BE AN ASYNC / AWAIT FUNCUTION
-   */
-  handleSubmit() {
-    // update this.state.query
-
-    // call API search function and pass in the value of this.state.query
-
-    // update this.state.results 
-  }
-
-  render() {
-    return (
-      <>
-        <h1>
-        Searchbar component
-        </h1>
-      </>
     );
-  }
-}
-
-export default Searchbar;
+};
+export default SearchBar;

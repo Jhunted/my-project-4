@@ -1,0 +1,22 @@
+.anime {
+    background-color: whitesmoke;
+    border: 1px solid #333;
+    border-radius: 10px;
+    height: 250px;
+    margin: 20px;
+    padding: 10px;
+}
+
+.anime-thumbnail-container {
+    float: left;
+    margin: 10px;
+}
+
+.anime-detail-container {
+    float: left;
+    margin: 10px;
+}
+
+.anime-thumbnail {
+    width: 150px;
+}
