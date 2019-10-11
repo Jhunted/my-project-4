@@ -25,6 +25,13 @@ function addCollection(req, res) {
     });
 }
 
+    // req to add to collection, finduser by id push their
+    
+    // id into the collection []
+
+    // associate to the user
+    // define which fields you want to use for the database
+    // new Collection and then .save()
 function getCollection(req, res) {
     Collection.find({user: req.user._id}, function(err, collection) {
         if (err) console.log(err);
