@@ -1,5 +1,5 @@
 import React from 'react';
-import './SearchBar.css';
+// import './SearchBar.css';
 
 const SearchBar = (props) => {
     const [query, setQuery] = React.useState('')
@@ -15,7 +15,7 @@ const SearchBar = (props) => {
                     <input
                         type="text"
                         name="search"
-                        placeholder="Search Comic by Title"
+                        placeholder="Search"
                         value={query}
                         onChange={(event) => {
                             setQuery(event.target.value) 
@@ -25,7 +25,7 @@ const SearchBar = (props) => {
                     />
                 </label>
                 <button type='submit'>
-                SUBMIT
+                Get top characters
                 </button>
             </form>
 

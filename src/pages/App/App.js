@@ -44,12 +44,6 @@ class App extends Component {
       collection: [],
       newAnime: null,
       query: '',
-      // title: '',
-      // issueNumber: '',
-      // pageCount: 0,
-      // description: '',
-      // thumbnail: '',
-      // price: 0,
       user: userService.getUser()
 
     };
