@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import NavBar from '../../components/NavBar/SearchBar';
+import getAnime from '../../services/api';
 
 
 const AnimePage = (props) => {

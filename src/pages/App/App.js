@@ -6,10 +6,9 @@ import LoginPage from '../LoginPage/LoginPage';
 import userService from '../../utils/userService';
 import tokenService from '../../utils/tokenService';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import SearchResults from '../../components/SearchResults/SearchResults';
 import Collection from '../../components/Collection/Collection';
-import animeService from '../../utils/animeService';
-import { getAnimes } from '../../services/a-api.js';
+import SearchResults from '../../components/SearchResults/SearchResults';
+import characterService from '../../utils/characterService';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -22,10 +21,10 @@ class SearchPage extends Component {
     console.log(query);
     this.setState({ results: [] });
 
-    const results = await getAnimes(query);
-    this.setState({ results: results.data });
-      console.log(results.data);
-      return { results: results.data };
+    const results = await characterService.getAnimes(query);
+    this.setState({ results: results });
+      console.log(results);
+      return { results: results };
     }
 
   render() {
@@ -45,6 +44,12 @@ class App extends Component {
       collection: [],
       newAnime: null,
       query: '',
+      // title: '',
+      // issueNumber: '',
+      // pageCount: 0,
+      // description: '',
+      // thumbnail: '',
+      // price: 0,
       user: userService.getUser()
 
     };
@@ -75,8 +80,7 @@ class App extends Component {
 
   handleAddAnime = (e, result) => {
     e.preventDefault();
-
-    animeService.addAnime(result);
+    characterService.addAnime(result);
   }
 
   handleDelAnime = (e, collection) => {
@@ -138,6 +142,7 @@ class App extends Component {
               handleSignUpOrLogin={this.handleSignUpOrLogin} 
             />
           } />
+
           <Route path="/search" render={(props) => (
             userService.getUser() ?
             <SearchPage {...props} handleAddAnime={this.handleAddAnime} />
@@ -160,3 +165,5 @@ class App extends Component {
   }
   
   export default App;
+
+  

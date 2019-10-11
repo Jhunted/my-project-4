@@ -2,23 +2,11 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const SECRET = process.env.SECRET;
 
+
 module.exports = {
   signup,
   login
 };
-
-async function signup(req, res) {
-  const user = new User(req.body);
-  try {
-    await user.save();
-    const token = createJWT(user);
-    res.json({ token });
-  } catch (err) {
-      console.log(err);
-    // Probably a duplicate email
-    res.status(400).json(err);
-  }
-}
 
 async function login(req, res) {
   try {
@@ -37,11 +25,25 @@ async function login(req, res) {
   }
 }
 
-/*----- Helper Functions -----*/
+async function signup(req, res) {
+  const user = new User(req.body);
+  try {
+    await user.save();
+    // TODO: Send back a JWT instead of the user
+    const token = createJWT(user);
+    res.json({ token });
+  } catch (err) {
+      console.log(err)
+    // Probably a duplicate email
+    res.status(400).json(err);
+  }
+}
+
+/*---------- Helper function ----------*/
 
 function createJWT(user) {
   return jwt.sign(
-    {user}, // data payload
+    {user}, //data payload
     SECRET,
     {expiresIn: '24h'}
   );

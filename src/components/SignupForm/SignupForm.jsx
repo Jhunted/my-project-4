@@ -3,16 +3,12 @@ import { Link } from 'react-router-dom';
 import userService from '../../utils/userService';
 
 class SignupForm extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      name: '',
-      email: '',
-      password: '',
-      passwordConf: ''
-    };
-  }
-
+  state = {
+    name: '',
+    email: '',
+    password: '',
+    passwordConf: ''
+  };
 
   handleChange = (e) => {
     this.props.updateMessage('');
@@ -26,9 +22,8 @@ class SignupForm extends Component {
     e.preventDefault();
     try {
       await userService.signup(this.state);
-      // Let <App> know a user has signed up!
-      this.props.handleSignUpOrLogin();
       // Successfully signed up - show GamePage
+      this.props.handleSignUpOrLogin();
       this.props.history.push('/');
     } catch (err) {
       // Invalid user data (probably duplicate email)
@@ -41,7 +36,6 @@ class SignupForm extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div>
         <header className="header-footer">Sign Up</header>

@@ -1,10 +1,12 @@
 import tokenService from "./tokenService";
 
+
 const BASE_URL = '/api/collections';
 
 export default {
     addAnime,
-    getCollection
+    getCollection,
+    getAnimes,
 };
 
 function addAnime(newAnime) {
@@ -29,3 +31,13 @@ function getCollection() {
         }
     })
 }
+
+
+
+const ANIME_URL = `https://api.jikan.moe/v3`;
+
+async function getAnimes(query) {
+  return fetch(ANIME_URL + '/anime/1/characters_staff')
+  .then(res => res.json())
+  .then(data => data);
+};
