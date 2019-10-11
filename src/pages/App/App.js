@@ -106,10 +106,10 @@ class App extends Component {
             </div>
             <div className="flex-1 text-right">
                 { this.state.user
-                ? <ul class="list-unstyled mb-0">
+                ? <ul className="list-unstyled mb-0">
                     <li className="nav-item"><Link to="" onClick={this.handleLogout}>Logout</Link></li>
                   </ul>
-                : <ul class="list-unstyled mb-0">
+                : <ul className="list-unstyled mb-0">
                     <li className="nav-item"><Link to="/signup">Sign up</Link></li>
                     <li className="nav-item"><Link to="/login">Login</Link></li>
                   </ul>
