@@ -1,7 +1,6 @@
 {
   "name": "my-project-4",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "bcrypt": "^3.0.6",
     "bcryptjs": "^2.4.3",
@@ -43,21 +42,5 @@
       "last 1 safari version"
     ]
   },
-  "description": "Link to GitHub: https://github.com/Jhunted/my-project-4.git",
-  "main": "server.js",
-  "devDependencies": {
-    "concurrently": "^5.0.0",
-    "nodemon": "^1.19.3"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Jhunted/my-project-4.git"
-  },
-  "author": "Joseph",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Jhunted/my-project-4/issues"
-  },
-  "homepage": "https://github.com/Jhunted/my-project-4#readme",
-  "proxy": "https://react-animapp.herokuapp.com/"
+  "proxy": "http://localhost:3001"
 }

@@ -58,10 +58,10 @@ class App extends Component {
   async componentDidMount() {
     if (this.state.user) {
       let collection = await fetch('/api/collections', {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
-          'Authorization': 'Bearer ' + tokenService.getToken()
+            "Content-Type": 'application/json',
+            'Authorization': 'Bearer ' + tokenService.getToken()
         }
       }).then(res => res.json())
       

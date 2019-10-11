@@ -24,9 +24,10 @@ function addAnime(newAnime) {
 }
 
 function getCollection() {
-    return fetch(BASE_URL, + 'collection', {
+    return fetch(BASE_URL, {
         method: 'GET',
         headers: {
+            "Content-Type": 'application/json',
             'Authorization': 'Bearer ' + tokenService.getToken()
         }
     })
